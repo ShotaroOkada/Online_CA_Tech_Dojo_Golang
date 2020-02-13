@@ -24,6 +24,7 @@ type (
 	}
 )
 
+//
 func NewUserCreateInteractor(userRepository domains.UserRepository) UserCreateUsecase {
 	result := &UserCreateInteractor{}
 	result.UserRepository = userRepository
