@@ -24,13 +24,14 @@ type (
 	}
 )
 
-//
+// NewUserCreateInteractor is func
 func NewUserCreateInteractor(userRepository domains.UserRepository) UserCreateUsecase {
 	result := &UserCreateInteractor{}
 	result.UserRepository = userRepository
 	return result
 }
 
+// Execute is func
 func (p UserCreateInteractor) Execute(req UserCreateRequest) (UserCreateResponse, error) {
 	token, err := p.UserRepository.Create(domains.User{
 		ID:   "",
