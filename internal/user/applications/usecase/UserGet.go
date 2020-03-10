@@ -3,19 +3,9 @@ package usecase
 import "github.com/ShotaroOkada/Online_CA_Tech_Dojo_Golang/internal/user/domains"
 
 type (
-	// UserGetRequest is struct
-	UserGetRequest struct {
-		token string
-	}
-
-	// UserGetResponse is struct
-	UserGetResponse struct {
-		name string
-	}
-
 	// UserGetUsecase is interface
 	UserGetUsecase interface {
-		Execute(req UserGetRequest) (UserGetResponse, error)
+		Execute(token string) (user *domains.User, err error)
 	}
 
 	// UserGetInteractor is struct
@@ -32,11 +22,11 @@ func NewUserGetInteractor(userRepository domains.UserRepository) UserGetUsecase 
 }
 
 // Execute is func
-func (p UserGetInteractor) Execute(req UserGetRequest) (UserGetResponse, error) {
-	user, err := p.UserRepository.Get(req.token)
+func (p UserGetInteractor) Execute(token string) (user *domains.User, err error) {
+	user, err = p.UserRepository.Get(token)
 
 	if err != nil {
-		return UserGetResponse{name: ""}, err
+		return nil, err
 	}
-	return UserGetResponse{name: user.Name}, nil
+	return user, nil
 }
