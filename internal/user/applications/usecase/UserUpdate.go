@@ -3,9 +3,13 @@ package usecase
 import "github.com/ShotaroOkada/Online_CA_Tech_Dojo_Golang/internal/user/domains"
 
 type (
+	// UserUpdateRequest is struct
+	UserUpdateRequest struct {
+		user domains.User
+	}
 	// UserUpdateUsecase is interface
 	UserUpdateUsecase interface {
-		Execute(user domains.User) error
+		Execute(req UserUpdateRequest) error
 	}
 	// UserUpdateInteractor is struct
 	UserUpdateInteractor struct {
@@ -21,8 +25,8 @@ func NewUserUpdateInteractor(userRepo domains.UserRepository) UserUpdateUsecase 
 }
 
 // Execute is func
-func (u UserUpdateInteractor) Execute(user domains.User) error {
-	err := u.UserRepository.Update(user)
+func (u UserUpdateInteractor) Execute(req UserUpdateRequest) error {
+	err := u.UserRepository.Update(req.user)
 	if err != nil {
 		return err
 	}
