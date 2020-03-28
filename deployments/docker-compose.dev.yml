@@ -1,0 +1,40 @@
+version: '3'
+services: 
+  user:
+    container_name: user-service-dev
+    build: 
+      context: ..
+      dockerfile: ./build/user/Dockerfile.dev
+    env_file: 
+      - ../config/dev.env
+    environment: 
+      - PORT=:5000
+    ports: 
+      - 5000:5000
+    volumes: 
+      - ..:/app
+  mongo:
+    image: mongo:latest
+    restart: always
+    environment: 
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: password
+      MONGO_INITDB_DATABASE: user
+    ports: 
+      - 27017:27017
+    volumes: 
+      - mongo-db:/data/db
+      - mongo-dbconfig:/data/dbconfig
+  mongo-express:
+    image: mongo-express
+    restart: always
+    ports: 
+      - 8081:8081
+    environment: 
+      ME_CONFIG_MONGODB_ADMINUSERNAME: root
+      ME_CONFIG_MONGODB_ADMINPASSWORD: password
+    depends_on: 
+      - mongo
+volumes: 
+  mongo-db:
+  mongo-dbconfig:
