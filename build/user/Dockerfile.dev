@@ -1,0 +1,6 @@
+FROM golang:1.13.5-alpine
+WORKDIR /app
+COPY . .
+RUN apk add --no-cache git && \ go get -u github.com/cosmtrek/air
+EXPOSE 5000
+CMD ["air", "-c", ".air.user.conf"]
