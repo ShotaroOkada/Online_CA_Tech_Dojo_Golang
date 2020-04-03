@@ -2,7 +2,7 @@ version: '3'
 services: 
   user:
     container_name: user-service-dev
-    build: 
+    build:
       context: ..
       dockerfile: ./build/user/Dockerfile.dev
     env_file: 
