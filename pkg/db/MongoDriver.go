@@ -44,14 +44,14 @@ func (d *Driver) Database() *mongo.Database {
 func (d *Driver) EstablishConnection() error {
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	if cancel != nil {
-		return fmt.Errorf("driver.EstablishConnection() on WithTimeout")
+		return fmt.Errorf("Mongo EstablishConnection() on WithTimeout")
 	}
 	client, err := mongo.NewClient(options.Client().ApplyURI(_mongoURL))
 	if err != nil {
-		return fmt.Errorf("driver.EstablishConnection() on NewClient:%w", err)
+		return fmt.Errorf("Mongo EstablishConnection() on NewClient:%w", err)
 	}
 	if err := client.Connect(ctx); err != nil {
-		return fmt.Errorf("driver.EstablishConnection() on Connect:%w", err)
+		return fmt.Errorf("Mongo EstablishConnection() on Connect:%w", err)
 	}
 	d.DB = client.Database(_mongoDataBase)
 	return nil
