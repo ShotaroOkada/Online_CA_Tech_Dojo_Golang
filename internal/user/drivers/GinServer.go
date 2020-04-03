@@ -44,6 +44,6 @@ func (s ServerDriver) CreateRouting() {
 
 // Run is func
 func (s ServerDriver) Run() error {
-	fmt.Printf("info: listen on #{_defaultPort}")
+	fmt.Printf("info: listen on" + _defaultPort)
 	return s.Router.Run(_defaultPort)
 }
