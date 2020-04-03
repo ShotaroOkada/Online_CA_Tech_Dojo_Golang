@@ -43,9 +43,7 @@ func (d *Driver) Database() *mongo.Database {
 // EstablishConnection is func
 func (d *Driver) EstablishConnection() error {
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
-	if cancel != nil {
-		return fmt.Errorf("Mongo EstablishConnection() on WithTimeout")
-	}
+	defer cancel()
 	client, err := mongo.NewClient(options.Client().ApplyURI(_mongoURL))
 	if err != nil {
 		return fmt.Errorf("Mongo EstablishConnection() on NewClient:%w", err)
