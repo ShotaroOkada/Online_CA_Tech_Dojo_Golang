@@ -49,9 +49,9 @@ func (u UserController) Create(c *gin.Context) {
 
 // Get is func
 func (u UserController) Get(c *gin.Context) {
-	token := c.Param("token")
+	token := c.Request.Header.Get("token")
 	if token == "" {
-		c.JSON(http.StatusBadRequest, gin.H{"message": "parameter token is empty"})
+		c.JSON(http.StatusBadRequest, gin.H{"message": "request header token is empty"})
 		return
 	}
 	result, err := u.UserGetUsecase.Execute(token)
