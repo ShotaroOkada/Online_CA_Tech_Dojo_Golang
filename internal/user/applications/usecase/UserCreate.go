@@ -3,7 +3,7 @@ package usecase
 import "github.com/ShotaroOkada/Online_CA_Tech_Dojo_Golang/internal/user/domains"
 
 type (
-	// UserCreateRequest is struct
+	// UserCreateRequset is struct
 	UserCreateRequset struct {
 		name string
 	}
@@ -28,10 +28,7 @@ func NewUserCreateInteractor(userRepository domains.UserRepository) UserCreateUs
 
 // Execute is func
 func (p UserCreateInteractor) Execute(req UserCreateRequset) (token string, err error) {
-	token, err = p.UserRepository.Create(&domains.User{
-		ID:   "",
-		Name: req.name,
-	})
+	token, err = p.UserRepository.Create(req.name)
 
 	if err != nil {
 		return "", err

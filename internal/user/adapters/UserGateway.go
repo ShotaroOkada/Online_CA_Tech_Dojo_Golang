@@ -8,7 +8,6 @@ import (
 	"github.com/ShotaroOkada/Online_CA_Tech_Dojo_Golang/internal/user/domains"
 	"github.com/ShotaroOkada/Online_CA_Tech_Dojo_Golang/pkg/db"
 	"go.mongodb.org/mongo-driver/bson"
-	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
 var (
@@ -28,12 +27,11 @@ func NewUserGateway(driver db.IMongoDriver) domains.UserRepository {
 }
 
 // Create is func
-func (u UserGateway) Create(user *domains.User) (token string, err error) {
+func (u UserGateway) Create(name string) (token string, err error) {
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
 	if _, err := u.MongoDriver.Database().Collection(_userCollectionName).InsertOne(ctx, bson.M{
-		"id":   user.ID,
-		"name": user.Name,
+		"name": name,
 	}); err != nil {
 		return "", err
 	}
@@ -56,7 +54,6 @@ func (u UserGateway) Get(token string) (*domains.User, error) {
 	}
 	var user *domains.User
 	user = &domains.User{
-		ID:   result["id"].(primitive.ObjectID).String(),
 		Name: result["name"].(string),
 	}
 
@@ -69,7 +66,7 @@ func (u UserGateway) Update(user domains.User) error {
 	defer cancel()
 
 	filter := bson.M{
-		"id": user.ID,
+		"token": "hoge",
 	}
 	_, err := u.MongoDriver.Database().Collection(_userCollectionName).UpdateOne(ctx, filter, user)
 	if err != nil {
