@@ -5,7 +5,7 @@ import "github.com/ShotaroOkada/Online_CA_Tech_Dojo_Golang/internal/user/domains
 type (
 	// UserCreateRequset is struct
 	UserCreateRequset struct {
-		name string
+		Name string `json:"name"`
 	}
 
 	// UserCreateUsecase is interface
@@ -28,7 +28,7 @@ func NewUserCreateInteractor(userRepository domains.UserRepository) UserCreateUs
 
 // Execute is func
 func (p UserCreateInteractor) Execute(req UserCreateRequset) (token string, err error) {
-	token, err = p.UserRepository.Create(req.name)
+	token, err = p.UserRepository.Create(req.Name)
 
 	if err != nil {
 		return "", err
