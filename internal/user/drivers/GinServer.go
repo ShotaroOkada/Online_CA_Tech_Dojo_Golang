@@ -29,6 +29,7 @@ func NewServerDriver(userController adapters.IUserController) IServerDriver {
 	result := &ServerDriver{}
 	result.Router = gin.Default()
 	result.IUserController = userController
+	result.CreateRouting()
 	return result
 }
 

@@ -33,12 +33,12 @@ func NewUserController(create usecase.UserCreateUsecase, get usecase.UserGetUsec
 
 // Create is func
 func (u UserController) Create(c *gin.Context) {
-	name := c.Param("id")
-	if name == "" {
-		c.JSON(http.StatusBadRequest, gin.H{"message": "parameter name is empty"})
+	var reqObject usecase.UserCreateRequset
+	if err := c.BindJSON(&reqObject); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"message": "request body is not correct"})
 		return
 	}
-	result, err := u.UserCreateUsecase.Execute(name)
+	result, err := u.UserCreateUsecase.Execute(reqObject)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"message": err.Error()})
 		return
